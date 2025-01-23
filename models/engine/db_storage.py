@@ -1,36 +1,30 @@
 #!/usr/bin/python3
-"""This module defines a class to manage database storage for hbnb clone"""
-
-from os import getenv
-from models.base_model import Base
-from models.base_model import BaseModel
+"""New engine DBStorage"""
+import os
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker, scoped_session
+from models.base_model import BaseModel, Base
 from models.user import User
-from models.place import Place
 from models.state import State
 from models.city import City
+from models.place import Place
 from models.amenity import Amenity
 from models.review import Review
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
 
 
 class DBStorage:
-    """This class manages storage for hbnb clone"""
-    __engine = None
-    __session = None
+    """The new database storage class"""
+    _engine = None
+    _session = None
 
     def __init__(self):
-        """Initializes a new DBStorage instance"""
-        self.__engine = create_engine(
-            'mysql+mysqldb://{}:{}@localhost:3306/{}'.format(
-                getenv('HBNB_MYSQL_USER'),
-                getenv('HBNB_MYSQL_PWD'),
-                getenv('HBNB_MYSQL_HOST'),
-                getenv('HBNB_MYSQL_DB'),
-                pool_pre_ping=True
-            )
-        )
-
+        """Initialize the DBStorage class"""
+        self._engine = create_engine('mysql+mysqldb://{}:{}@{}:3306/{}'
+                                     .format(os.getenv('HBNB_MYSQL_USER'),
+                                             os.getenv('HBNB_MYSQL_PWD'),
+                                             os.getenv('HBNB_MYSQL_HOST'),
+                                             os.getenv('HBNB_MYSQL_DB')),
+                                     pool_pre_ping=True)
         if os.getenv('HBNB_ENV') == 'test':
             Base.metadata.drop_all(self._engine)
 
