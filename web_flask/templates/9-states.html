@@ -14,7 +14,7 @@
       {% elif state %}
         <h1>State: {{ state.name }}</h1>
         <h1>Cities:</h1>
-        <ul> {% for city in state.cities|sort(attribute= 'name') %)
+        <ul> {% for city in state.cities|sort(attribute= 'name') %}
 	    <li>{{ city.id }}: <b>{{ city.name }} </b></li>
           {% endfor %}
         </ul>
