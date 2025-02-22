@@ -24,6 +24,7 @@ def text_var(text):
     no_underscore = text.replace('_', ' ')
     return "C {}".format(no_underscore)
 
+
 @app.route('/python', strict_slashes=False)
 @app.route('/python/<text>', strict_slashes=False)
 def text_route_python(text="is cool"):
